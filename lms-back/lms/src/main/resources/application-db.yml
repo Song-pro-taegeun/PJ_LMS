@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    generate-ddl: 'false'
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'false'
+  datasource:
+    password: ${spring.db.password}
+    url: ${spring.db.url}
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${spring.db.username}
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/**.xml
+  configuration:
+    map-underscore-to-camel-case: 'true'
+    call-setters-on-nulls: true
