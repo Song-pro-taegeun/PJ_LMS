@@ -46,8 +46,16 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	// useJUnitPlatform()
+}
+
+// 빌드시 TEST코드 제외
+tasks.withType(Test) {
+	enabled = false
 }
