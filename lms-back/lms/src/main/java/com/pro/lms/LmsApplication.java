@@ -16,4 +16,10 @@ public class LmsApplication {
 		System.out.println(args);
         System.out.println("------------------------------------------------------------------------------------------------");
 	}
+
+	private static long id = System.currentTimeMillis();
+	public synchronized static String makeNextSessionId() {
+		id++;
+		return "PJ_LMS" + id;
+	}
 }

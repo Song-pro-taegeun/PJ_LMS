@@ -1,5 +1,5 @@
 spring:
-  # boot 2.7?? ???3.0 ???? ?? ??
+  # boot 2.7에서 swagger 3.0 셋팅 속성
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
