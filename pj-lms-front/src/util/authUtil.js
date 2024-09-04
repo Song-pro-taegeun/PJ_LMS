@@ -26,9 +26,8 @@ export const createTokenHeader = async () => {
       if (response.status === 200) {
         console.log("accessToken 발급 완료");
         // 토큰을 로컬스토리지에 새로 저장
-        localStorage.setItem("user", JSON.stringify(response.data));
-        localStorage.setItem("access_token", response.data.accessToken);
-        localStorage.setItem("token_type", response.data.grantType);
+        localStorage.setItem("pl_access_token", response.data.accessToken);
+        localStorage.setItem("pl_user_info", JSON.stringify(response.data));
 
         return {
           headers: {
@@ -38,10 +37,8 @@ export const createTokenHeader = async () => {
       } else {
         console.log("accessToken 발급 불가");
         alert("accessToken 발급 불가");
-
-        localStorage.removeItem("user");
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("token_type");
+        localStorage.removeItem("pl_access_token");
+        localStorage.removeItem("pl_user_info");
         document.location.href = "/login2024";
         return null;
       }
@@ -50,10 +47,8 @@ export const createTokenHeader = async () => {
     // 인증인가가 필요한 api에 로그인을 하지 않았다면,
     if (!accessToken) {
       alert("로그인이 필요합니다.");
-
-      localStorage.removeItem("user");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
+      localStorage.removeItem("pl_access_token");
+      localStorage.removeItem("pl_user_info");
       return null;
     }
     return {
@@ -72,7 +67,6 @@ const TimestampToDate = (timestamp) => {
 
 export const logOut = () => {
   window.location.href = "/";
-  localStorage.removeItem("user");
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("token_type");
+  localStorage.removeItem("pl_access_token");
+  localStorage.removeItem("pl_user_info");
 };

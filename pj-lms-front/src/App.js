@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./routes/routes";
-import { signInApi } from "./service/testService";
+import Header from "./component/main/Header";
+import Footer from "./component/main/Footer";
 
 function App() {
   return (
@@ -11,22 +12,9 @@ function App() {
 }
 
 const AppComponent = () => {
-  const test = async () => {
-    const param = {
-      email: "xormsdlrnt@naver.com",
-      password: "rmEk5712!!",
-    };
-    const response = await signInApi(param);
-    if (response.status === 200) {
-      console.log(response.data);
-    }
-  };
-
-  test();
-
   return (
     <div className="App">
-      <div className="header"> header</div>
+      <Header />
       <Layout>
         <Routes>
           {routes.map((route) => (
@@ -34,7 +22,7 @@ const AppComponent = () => {
           ))}
         </Routes>
       </Layout>
-      <div className="header"> footer</div>
+      <Footer />
     </div>
   );
 };
