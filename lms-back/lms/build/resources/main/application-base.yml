@@ -1,0 +1,19 @@
+server:
+  servlet:
+    encoding:
+      force-response: "true"
+    context-path: /api #base-url
+
+jwt:
+  #  secret: ${properties.base.jwt.secret}
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  expiration: 86400000
+  refresh: 864000000
+
+aes:
+  key: PZ1TiScLPitKxObLx/EkR+RqkaMq+AVrK4BgCDdYXBI=
+
+#logging:
+#  config: classpath:log4j2-dev.xml
+#  level:
+#    root: WARN
