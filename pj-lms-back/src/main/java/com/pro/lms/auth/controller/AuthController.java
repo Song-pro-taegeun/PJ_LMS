@@ -58,10 +58,4 @@ public class AuthController {
         String sessionId = LmsApplication.makeNextSessionId();
         return ResponseEntity.ok(authService.reissue(tokenRequestDto, sessionId));
     }
-
-    @ApiOperation("TEST API")
-    @GetMapping("/test")
-    public List<LmsUser> testApi()throws Exception{
-        return authService.testService();
-    }
 }

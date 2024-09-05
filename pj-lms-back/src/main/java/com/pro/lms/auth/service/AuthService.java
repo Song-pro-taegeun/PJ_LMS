@@ -18,10 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -100,9 +96,5 @@ public class AuthService {
 
         // 토큰 발급
         return tokenDto;
-    }
-
-    public List<LmsUser> testService() throws Exception{
-        return memberRepository.findAll();
     }
 }

@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface LmsMemberRepository extends JpaRepository<LmsUser, Long> {
     boolean existsByPmUserId(String email);
     Optional<LmsUser> findByPmUserId(String username);
-
 }
