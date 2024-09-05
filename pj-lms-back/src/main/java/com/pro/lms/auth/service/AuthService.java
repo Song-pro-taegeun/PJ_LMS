@@ -48,7 +48,7 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDto login(MemberRequestDto memberRequestDto, String sessionId) {
+    public TokenDto login(MemberRequestDto memberRequestDto, String sessionId){
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
 

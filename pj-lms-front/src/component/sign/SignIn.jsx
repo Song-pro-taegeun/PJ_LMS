@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signInApi } from "../../service/authService";
+import { validateEmail } from "../../util/commonFunction.ts";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -14,18 +15,22 @@ export default function SignIn() {
 
   // 로그인 핸들러
   const handleSignInBtn = async () => {
-    if (nullCheck()) {
+    if (inputCheck()) {
       signInApiCall();
     }
   };
 
   // 필수 체크
-  const nullCheck = () => {
+  const inputCheck = () => {
     let formErrorInfo = {
       emailError: formError.emailError,
       passwordError: formError.passwordError,
     };
 
+    // 1. 이메일 정규식 check
+    emailCheck();
+
+    // 2. null check
     if (!formData.email) {
       formErrorInfo.emailError = "이메일을 입력해주세요.";
     } else {
@@ -54,15 +59,35 @@ export default function SignIn() {
     };
 
     const response = await signInApi(param);
-    if (response.status === 200) {
-      localStorage.setItem("pl_access_token", response.data.accessToken);
-      localStorage.setItem("pl_user_info", JSON.stringify(response.data));
+    try {
+      if (response.status === 200) {
+        localStorage.setItem("pl_access_token", response.data.accessToken);
+        localStorage.setItem("pl_user_info", JSON.stringify(response.data));
 
-      const userInfo = localStorage.getItem("pl_user_info");
-      console.log(JSON.parse(userInfo));
+        const userInfo = localStorage.getItem("pl_user_info");
+        console.log(JSON.parse(userInfo));
+      }
+    } catch (error) {
+      console.log("🚀 ~ signInApiCall ~ error:", error);
+
+      // 이메일 정규식이 정상적이라면 아이디 / 비밀번호가 잘못된 것임
+      if (emailCheck()) {
+        setFormError({
+          emailError: "아이디를 확인해주세요.",
+          passwordError: "비밀번호를 확인해주세요.",
+        });
+      }
     }
   };
 
+  function emailCheck() {
+    // 정규식 check
+    if (!validateEmail(formData.email)) {
+      setFormError({ emailError: "이메일 형식이 잘못되었습니다.", passwordError: null });
+    }
+
+    return validateEmail(formData.email); // 정상이면 true, 틀리면 false 반환
+  }
   return (
     <>
       <div className="signIn">SignIn</div>

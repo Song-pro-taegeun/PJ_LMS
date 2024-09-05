@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,11 +35,10 @@ public class AuthController {
 
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto, @RequestHeader HttpHeaders header) {
+    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto)  throws Exception {
         TokenDto dto;
         // 세션ID를 토큰에 추가하기 위해 생성한다.
         String sessionId = LmsApplication.makeNextSessionId();
-
         try {
             dto = authService.login(memberRequestDto, sessionId);
         } catch ( Exception e ) {
