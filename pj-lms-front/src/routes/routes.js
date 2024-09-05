@@ -1,7 +1,7 @@
 import Home from "../component/main/Home";
 import SignIn from "../component/sign/SignIn";
 import SignUp from "../component/sign/SignUp";
-
+import TestComponent from "../component/testComponent/TestComponent";
 const routes = [
   {
     path: "/",
@@ -14,6 +14,10 @@ const routes = [
   {
     path: "/signUp",
     element: <SignUp />,
+  },
+  {
+    path: "/testComponent",
+    element: <TestComponent />,
   },
 ];
 
