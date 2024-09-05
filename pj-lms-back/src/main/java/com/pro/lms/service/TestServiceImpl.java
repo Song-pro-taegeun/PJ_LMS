@@ -1,7 +1,11 @@
 package com.pro.lms.service;
 
 import com.pro.lms.entity.LmsUser;
+import com.pro.lms.entity.Post;
+import com.pro.lms.entity.User;
 import com.pro.lms.repository.LmsMemberRepository;
+import com.pro.lms.repository.PostRepository;
+import com.pro.lms.repository.UserRepository;
 import com.pro.lms.util.AesCipher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,12 @@ public class TestServiceImpl implements TestService{
     @Resource
     private AesCipher aesCipher;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
     public List<LmsUser> testGetApi() throws Exception{
         return memberRepository.findAll();
     }
@@ -33,5 +43,13 @@ public class TestServiceImpl implements TestService{
             result = null;
         }
         return result;
+    }
+
+    public List<User> getJoinJpaTest(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public List<Post> getJoinJpaTestPost(String username){
+        return postRepository.findByUserUsername(username);
     }
 }
