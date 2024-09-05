@@ -18,6 +18,7 @@ public class MemberRequestDto {
     private String userName;
     private String pmPhone;
     private Long pmRegDt;
+    private String userRole;
 
     public LmsUser toMember(PasswordEncoder passwordEncoder) {
         return LmsUser.builder()
@@ -26,17 +27,12 @@ public class MemberRequestDto {
                 .pmName(userName)
                 .pmPhone(pmPhone)
                 .authority(Authority.ROLE_USER)
+                .userRole(userRole)
                 .build();
     }
 
     // 아이디와 비번이 일치하는지 검증하는 로직
     public UsernamePasswordAuthenticationToken toAuthentication() {
         return new UsernamePasswordAuthenticationToken(email, password);
-    }
-
-    @Builder
-    public MemberRequestDto(String email, String userName) {
-        this.email = email;
-        this.userName = userName;
     }
 }

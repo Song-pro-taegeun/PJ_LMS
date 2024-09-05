@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -48,7 +49,7 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDto login(MemberRequestDto memberRequestDto, String sessionId) {
+    public TokenDto login(MemberRequestDto memberRequestDto, String sessionId){
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
 
@@ -78,7 +79,7 @@ public class AuthService {
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
         }
-        // 2. Access Token 에서 FxUrUser ID 가져오기
+        // 2. Access Token ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // 3. 저장소에서 FxUrUser ID 를 기반으로 Refresh Token 값 가져옴
@@ -99,5 +100,9 @@ public class AuthService {
 
         // 토큰 발급
         return tokenDto;
+    }
+
+    public List<LmsUser> testService() throws Exception{
+        return memberRepository.findAll();
     }
 }
