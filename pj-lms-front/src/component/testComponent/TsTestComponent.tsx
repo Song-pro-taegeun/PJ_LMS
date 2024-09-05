@@ -11,7 +11,7 @@ const TsTestComponent: React.FC = () => {
   // api Ts test
   const apiTsTest = async () => {
     const param = {
-      url: "/api/auth/test",
+      url: "/api/test/testGet",
       method: "GET",
       header: null,
       data: null,
