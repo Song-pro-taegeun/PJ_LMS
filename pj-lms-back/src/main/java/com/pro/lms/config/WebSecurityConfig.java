@@ -34,6 +34,7 @@ public class WebSecurityConfig {
             /* swagger v3 */
             "/v3/api-docs/**", "/swagger-ui/**"
             ,"/auth/**"
+            ,"/test/**"
     };
 
     @Bean
@@ -50,7 +51,6 @@ public class WebSecurityConfig {
                 // http.httpBasic().and().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)
-                // fxMo는 헤더값을 넘겨도 지속적으로 에러가 발생하여 임시로 노인증 처리
                 .and().authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll().anyRequest()
                 .authenticated().and().apply(new JwtSecurityConfig(tokenProvider));
 
