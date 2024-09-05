@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -67,6 +69,19 @@ public class AuthService {
 
         // 5. 토큰 발급
         return tokenDto;
+    }
+
+
+    public int passwordReset(LmsUser inData){
+        Optional<LmsUser> data = memberRepository.findByPmUserId(inData.getPmUserId());
+        if(data.isPresent()){
+            LmsUser user = data.get();
+            user.setPmPwd(passwordEncoder.encode(inData.getPmPwd()));
+            memberRepository.save(user);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Transactional

@@ -7,6 +7,7 @@ import com.pro.lms.auth.dto.TokenDto;
 import com.pro.lms.auth.dto.TokenRequestDto;
 import com.pro.lms.auth.service.AuthService;
 import com.pro.lms.auth.service.MailService;
+import com.pro.lms.entity.LmsUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,12 @@ public class AuthController {
     @GetMapping("/verification/{pmUserId}")
     public String authVerification (@PathVariable String pmUserId) {
         return mailService.mailSend(pmUserId);
+    }
+
+    @ApiOperation(value = "비밀번호 재설정")
+    @PostMapping("/password/reset")
+    public int passwordReset(@RequestBody LmsUser lmsUser) {
+        return authService.passwordReset(lmsUser);
     }
 
     @ApiOperation(value = "리프레쉬토큰 검증 및 액세스토큰 재발급")

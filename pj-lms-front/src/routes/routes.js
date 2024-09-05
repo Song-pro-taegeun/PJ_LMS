@@ -3,6 +3,7 @@ import SignIn from "../component/sign/SignIn";
 import SignUp from "../component/sign/SignUp";
 import TestComponent from "../component/testComponent/TestComponent";
 import SignInCopy from "../component/sign/SignInCopy";
+import PwdReset from "../component/sign/PwdReset";
 
 const routes = [
   {
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "/signInCopy",
     element: <SignInCopy />,
+  },
+  {
+    path: "/passwordReset",
+    element: <PwdReset />,
   },
 ];
 
