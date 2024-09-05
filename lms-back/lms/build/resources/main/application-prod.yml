@@ -1,8 +1,0 @@
-spring:
-  config:
-    activate:
-      on-profile: prod
-  db:
-    password: "rmEk5712!!"
-    url: "jdbc:mariadb://pj-lms-mariadb.c1g8gmmiy2vl.ap-northeast-2.rds.amazonaws.com:3306/PjLmsDb"
-    username: "root"
