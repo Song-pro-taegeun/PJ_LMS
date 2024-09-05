@@ -13,4 +13,5 @@ public interface TestService {
     LmsUser testApiPost(LmsUser lmsUser) throws Exception;
     List<User> getJoinJpaTest(String username);
     List<Post> getJoinJpaTestPost(String username);
+    Post insertPost(Post post);
 }

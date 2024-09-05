@@ -42,4 +42,9 @@ public class TestController {
     public List<Post> getJoinJpaTestPost(@PathVariable("username") String username){
         return testService.getJoinJpaTestPost(username);
     }
+
+    @PostMapping("/testInsert")
+    Post insertPost(@RequestBody Post post){
+        return testService.insertPost(post);
+    }
 }

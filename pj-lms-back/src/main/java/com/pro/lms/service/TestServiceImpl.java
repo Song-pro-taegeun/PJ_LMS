@@ -52,4 +52,8 @@ public class TestServiceImpl implements TestService{
     public List<Post> getJoinJpaTestPost(String username){
         return postRepository.findByUserUsername(username);
     }
+
+    public Post insertPost(Post post){
+        return postRepository.save(post);
+    }
 }
