@@ -1,0 +1,13 @@
+spring:
+  mail:
+    username: "xormsdlrnt98@gmail.com"
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: "true"
+          auth: "true"
+    host: smtp.gmail.com
+    password: "ljhg ldak oagq sdhl"
+    port: "587"
+certfType: email
