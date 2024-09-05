@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { signInApi } from "../../service/authService";
-import { validateEmail } from "../../util/commonFunction.ts";
+import { validateEmail } from "../../util/commonFunction";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
