@@ -6,19 +6,13 @@ import com.pro.lms.auth.dto.MemberResponseDto;
 import com.pro.lms.auth.dto.TokenDto;
 import com.pro.lms.auth.dto.TokenRequestDto;
 import com.pro.lms.auth.service.AuthService;
-import com.pro.lms.entity.LmsUser;
-import com.pro.lms.repository.LmsMemberRepository;
+import com.pro.lms.auth.service.MailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +22,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Resource
-    private LmsMemberRepository lmsMemberRepository;
+    @Autowired
+    private MailService mailService;
 
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
@@ -50,6 +44,12 @@ public class AuthController {
             throw e;
         }
         return ResponseEntity.ok(dto);
+    }
+
+    @ApiOperation(value = "이메일 코드 전송")
+    @GetMapping("/verification/{pmUserId}")
+    public String authVerification (@PathVariable String pmUserId) {
+        return mailService.mailSend(pmUserId);
     }
 
     @ApiOperation(value = "리프레쉬토큰 검증 및 액세스토큰 재발급")
