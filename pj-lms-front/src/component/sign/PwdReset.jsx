@@ -2,6 +2,7 @@ import { useState } from "react";
 import { passwordResetApi, sendCodeApi } from "../../service/authService";
 import { aesDecrypt } from "../../util/aesCrypto";
 import { useNavigate } from "react-router-dom";
+import Verification from "./Verification";
 
 export default function PwdReset() {
   const nav = useNavigate();
@@ -20,6 +21,14 @@ export default function PwdReset() {
 
   const [decryptValue, setDecryptValue] = useState();
 
+  const prop = {
+    formData,
+    setFormData,
+    step,
+    setStep,
+    decryptValue,
+  };
+
   const handleSendClick = () => {
     callSendCode();
   };
@@ -29,15 +38,6 @@ export default function PwdReset() {
     if (response.status === 200) {
       setDecryptValue(aesDecrypt(response.data));
       setStep({ ...step, level1: false, level2: true });
-    }
-  };
-
-  const handleCodeCheck = () => {
-    if (formData.code === decryptValue) {
-      alert("정답");
-      setStep({ ...step, level2: false, level3: true });
-    } else {
-      alert("실패");
     }
   };
 
@@ -75,19 +75,7 @@ export default function PwdReset() {
         </>
       )}
 
-      {step.level2 && (
-        <>
-          <span>인증코드</span>
-          <input
-            type="number"
-            onChange={(e) => {
-              setFormData({ ...formData, code: e.target.value });
-            }}
-          />
-          <button onClick={handleCodeCheck}>확인</button>
-        </>
-      )}
-
+      {step.level2 && <Verification prop={prop} />}
       {step.level3 && (
         <>
           <span>새 비밀번호 입력</span>
