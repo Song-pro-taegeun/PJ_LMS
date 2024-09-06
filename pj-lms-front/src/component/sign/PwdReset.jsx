@@ -3,6 +3,7 @@ import { passwordResetApi, sendCodeApi } from "../../service/authService";
 import { aesDecrypt } from "../../util/aesCrypto";
 import { useNavigate } from "react-router-dom";
 import Verification from "./Verification";
+import { validatePassword } from "../../util/commonFunction";
 
 export default function PwdReset() {
   const nav = useNavigate();
@@ -17,6 +18,13 @@ export default function PwdReset() {
     code: null,
     password: null,
     passwordConfirm: null,
+  });
+
+  // 비밀번호 Error useState 설정
+  const [formError, setFormError] = useState({
+    passwordError: null,
+    passwordConfirmError: null,
+    passwordMismatchError: null,
   });
 
   const [decryptValue, setDecryptValue] = useState();
@@ -41,10 +49,56 @@ export default function PwdReset() {
     }
   };
 
+  // const handleSubmit = () => {
+  //   if (formData.password === formData.passwordConfirm) {
+  //     callPasswordReset();
+  //   }
+  // };
+
+  // 비밀번호 재설정 핸들러 확인체크
   const handleSubmit = () => {
-    if (formData.password === formData.passwordConfirm) {
+    if (inputCheck()) {
       callPasswordReset();
     }
+  };
+
+  const inputCheck = () => {
+    let formErrorInfo = {
+      passwordError: formError.passwordError,
+      passwordConfirmError: formError.passwordConfirmError,
+    };
+
+    // passwordCheck();
+
+    // 비밀번호 입력값 체크
+    if (!formData.password) {
+      formErrorInfo.passwordError = "비밀번호를 입력하세요";
+    } else if (!validatePassword(formData.password)) {
+      formErrorInfo.passwordError = "비밀번호 형식이 잘못되었습니다.";
+    }
+
+    if (!formData.passwordConfirm) {
+      formErrorInfo.passwordConfirmError = "비밀번호 확인을 입력하세요";
+    } else if (!validatePassword(formData.passwordConfirm)) {
+      formErrorInfo.passwordConfirmError =
+        "비밀번호 확인 형식이 잘못되었습니다.";
+    }
+
+    if (
+      formData.password &&
+      formData.passwordConfirm &&
+      formData.password !== formData.passwordConfirm
+    ) {
+      formErrorInfo.passwordMismatchError = "비밀번호가 일치하지 않습니다.";
+    }
+
+    setFormError(formErrorInfo);
+
+    return (
+      !formErrorInfo.passwordError &&
+      !formErrorInfo.passwordConfirmError &&
+      !formErrorInfo.passwordMismatchError
+    );
   };
 
   const callPasswordReset = async () => {
@@ -56,9 +110,12 @@ export default function PwdReset() {
     if (response.status === 200) {
       nav("/signIn");
     } else {
-      alert("뭔가 잘못됨");
+      setFormError({
+        passwordMismatchError: "비밀번호 변경 실패",
+      });
     }
   };
+
   return (
     <>
       <h2>PWD RESET</h2>
@@ -85,6 +142,9 @@ export default function PwdReset() {
               setFormData({ ...formData, password: e.target.value });
             }}
           />
+          {formError.passwordError && (
+            <span style={{ color: "red" }}>{formError.passwordError}</span>
+          )}
           <br />
           <span>새 비밀번호 확인</span>
           <input
@@ -93,7 +153,19 @@ export default function PwdReset() {
               setFormData({ ...formData, passwordConfirm: e.target.value });
             }}
           />
+          {formError.passwordConfirmError && (
+            <span style={{ color: "red" }}>
+              {formError.passwordConfirmError}
+            </span>
+          )}
+
           <button onClick={handleSubmit}>설정완료</button>
+          <br />
+          {formError.passwordMismatchError && (
+            <span style={{ color: "red" }}>
+              {formError.passwordMismatchError}
+            </span>
+          )}
         </>
       )}
     </>
