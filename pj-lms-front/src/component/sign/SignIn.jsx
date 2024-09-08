@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { signInApi } from "../../service/authService";
 import { validateEmail } from "../../util/commonFunction";
+import { useNavigate } from "react-router-dom";
 
+// 수정된 코드 (올바른 방식)
+import { jwtDecode } from "jwt-decode";
 export default function SignIn() {
+  const nav = useNavigate();
   const [formData, setFormData] = useState({
     email: null,
     password: null,
@@ -28,26 +32,26 @@ export default function SignIn() {
     };
 
     // 1. 이메일 정규식 check
-    emailCheck();
+    if (emailCheck()) {
+      // 2. null check
+      if (!formData.email) {
+        formErrorInfo.emailError = "이메일을 입력해주세요.";
+      } else {
+        formErrorInfo.emailError = null;
+      }
 
-    // 2. null check
-    if (!formData.email) {
-      formErrorInfo.emailError = "이메일을 입력해주세요.";
-    } else {
-      formErrorInfo.emailError = null;
-    }
+      if (!formData.password) {
+        formErrorInfo.passwordError = "패스워드를 입력해주세요.";
+      } else {
+        formErrorInfo.passwordError = null;
+      }
+      setFormError(formErrorInfo);
 
-    if (!formData.password) {
-      formErrorInfo.passwordError = "패스워드를 입력해주세요.";
-    } else {
-      formErrorInfo.passwordError = null;
-    }
-    setFormError(formErrorInfo);
-
-    if (formErrorInfo.emailError || formErrorInfo.passwordError) {
-      return false;
-    } else {
-      return true;
+      if (formErrorInfo.emailError || formErrorInfo.passwordError) {
+        return false;
+      } else {
+        return true;
+      }
     }
   };
 
@@ -61,11 +65,10 @@ export default function SignIn() {
     const response = await signInApi(param);
     try {
       if (response.status === 200) {
-        localStorage.setItem("pl_access_token", response.data.accessToken);
         localStorage.setItem("pl_user_info", JSON.stringify(response.data));
-
-        const userInfo = localStorage.getItem("pl_user_info");
-        console.log(JSON.parse(userInfo));
+        const userInfo = JSON.parse(localStorage.getItem("pl_user_info"));
+        console.log(jwtDecode(userInfo.accessToken));
+        nav("/");
       }
     } catch (error) {
       console.log("🚀 ~ signInApiCall ~ error:", error);
@@ -101,13 +104,19 @@ export default function SignIn() {
               <input
                 type="text"
                 className="inp"
-                placeholder="아이디(영문 및 숫자조합)"
+                placeholder="아이디(이메일 형식)"
                 required="아이디"
-              ></input>
-              <p className="error-msg">
-                <span className="material-symbols-outlined">error</span>
-                아이디를 정확하게 입력해주세요.
-              </p>
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
+              />
+
+              {formError.emailError && (
+                <p className="error-msg">
+                  <span className="material-symbols-outlined">error</span>
+                  {formError.emailError}
+                </p>
+              )}
             </div>
             <div className="input pw">
               <input
@@ -115,42 +124,29 @@ export default function SignIn() {
                 className="inp"
                 placeholder="비밀번호"
                 required="비밀번호"
-              ></input>
-              <p className="error-msg">
-                <span className="material-symbols-outlined">error</span>
-                비밀번호를 정확하게 입력해주세요.
-              </p>
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                }}
+              />
+
+              {formError.passwordError && (
+                <p className="error-msg">
+                  <span className="material-symbols-outlined">error</span>
+                  {formError.passwordError}
+                </p>
+              )}
             </div>
 
             <div className="pw_find">비밀번호 찾기</div>
-            <div className="btn bt_green">로그인</div>
-            <div className="btn join">회원가입</div>
+            <div className="btn bt_green" onClick={handleSignInBtn}>
+              로그인
+            </div>
+            <div className="btn join" onClick={() => nav("/signUp")}>
+              회원가입
+            </div>
           </div>
         </div>
       </div>
     </>
-    // <>
-    //   <div className="signIn">SignIn</div>
-    //   <input
-    //     type="text"
-    //     onChange={(e) => {
-    //       setFormData({ ...formData, email: e.target.value });
-    //     }}
-    //   />
-    //   {formError.emailError && (
-    //     <span style={{ color: "red" }}>{formError.emailError}</span>
-    //   )}
-
-    //   <input
-    //     type="password"
-    //     onChange={(e) => {
-    //       setFormData({ ...formData, password: e.target.value });
-    //     }}
-    //   />
-    //   {formError.passwordError && (
-    //     <span style={{ color: "red" }}>{formError.passwordError}</span>
-    //   )}
-    //   <button onClick={handleSignInBtn}>로그인</button>
-    // </>
   );
 }

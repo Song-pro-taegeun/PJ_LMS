@@ -73,4 +73,17 @@ export const menuList = [
       },
     ],
   },
+  {
+    title: "고객센터",
+    child: [
+      {
+        subTitle: "문의사항",
+        to: "/",
+      },
+      {
+        subTitle: "1:1 대화",
+        to: "/",
+      },
+    ],
+  },
 ];

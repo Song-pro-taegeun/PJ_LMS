@@ -1,10 +1,10 @@
 import { POST } from "../service/fetch-auth-action.ts";
 
 export const createTokenHeader = async () => {
-  const userJSON = localStorage.getItem("user");
-  let accessToken = localStorage.getItem("access_token");
-
+  const userJSON = localStorage.getItem("pl_user_info");
+  let accessToken = null;
   if (userJSON) {
+    accessToken = JSON.parse(userJSON).accessToken;
     const refreshToken = JSON.parse(userJSON).refreshToken;
     const accessTokenExpiresIn = TimestampToDate(JSON.parse(userJSON).accessTokenExpiresIn);
     const currentDate = new Date();
@@ -26,7 +26,6 @@ export const createTokenHeader = async () => {
       if (response.status === 200) {
         console.log("accessToken 발급 완료");
         // 토큰을 로컬스토리지에 새로 저장
-        localStorage.setItem("pl_access_token", response.data.accessToken);
         localStorage.setItem("pl_user_info", JSON.stringify(response.data));
 
         return {
@@ -37,7 +36,6 @@ export const createTokenHeader = async () => {
       } else {
         console.log("accessToken 발급 불가");
         alert("accessToken 발급 불가");
-        localStorage.removeItem("pl_access_token");
         localStorage.removeItem("pl_user_info");
         document.location.href = "/login2024";
         return null;
@@ -47,15 +45,15 @@ export const createTokenHeader = async () => {
     // 인증인가가 필요한 api에 로그인을 하지 않았다면,
     if (!accessToken) {
       alert("로그인이 필요합니다.");
-      localStorage.removeItem("pl_access_token");
       localStorage.removeItem("pl_user_info");
       return null;
     }
-    return {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    };
+    return null;
+    // return {
+    //   headers: {
+    //     Authorization: "Bearer " + accessToken,
+    //   },
+    // };
   }
 };
 
@@ -67,6 +65,5 @@ const TimestampToDate = (timestamp) => {
 
 export const logOut = () => {
   window.location.href = "/";
-  localStorage.removeItem("pl_access_token");
   localStorage.removeItem("pl_user_info");
 };
