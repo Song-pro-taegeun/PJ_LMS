@@ -1,0 +1,171 @@
+.home {
+  border: 1px solid red;
+}
+
+@font-face {
+  font-family: "EF_MACHO";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/EF_MACHO.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/******* 공통 ******/
+* {
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+body {
+  font-family: "SUIT", sans-serif;
+  background: #121212;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo {
+  font-size: 30px;
+  font-family: "EF_MACHO";
+  animation: logo 5s ease-in-out infinite;
+}
+
+@keyframes logo {
+  0% {
+    color: white;
+  }
+  50% {
+    color: #0cd95d;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+.wrpa {
+  max-width: 1520px;
+}
+
+/****** 헤더 *****/
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 0 50px;
+  padding-top: 24px;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+
+.header .wrap {
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  border-radius: 12px;
+  padding: 0 50px;
+  align-items: center;
+  height: 80px;
+}
+
+.header .right {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 3em;
+}
+
+.header .menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  gap: 5em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header .menu > li {
+  padding: 30px 0;
+}
+
+.header .menu > li > span {
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.header .menu > li:hover > span {
+  color: #0cd95d;
+}
+
+.header .menu ul {
+  /* display: none; */
+  list-style: none;
+  position: absolute;
+  top: 113%;
+  height: 80px;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.header .menu ul li {
+  padding: 0 2.5em;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header .menu ul li:hover {
+  text-decoration: underline;
+}
+
+.header .menu ul li:first-child {
+  padding-left: 0;
+}
+
+.header .menu ul li:after {
+  content: "";
+  width: 1px;
+  height: 12px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header .menu ul li:last-child:after {
+  display: none;
+}
+
+a.login {
+  padding-left: 2em;
+  transition: 0.5s;
+}
+
+a.login:hover {
+  color: #0cd95d;
+}
+
+.menu_bg {
+  position: absolute;
+  width: 100%;
+  top: 90px;
+  left: 0;
+  height: 76px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: -1;
+  border-radius: 12px;
+}
