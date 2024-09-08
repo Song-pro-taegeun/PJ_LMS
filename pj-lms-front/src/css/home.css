@@ -12,11 +12,13 @@
   margin: 0;
   position: relative;
   list-style-type: none;
-}
-body {
+  box-sizing: border-box;
   font-family: "SUIT", sans-serif;
-  background: #121212;
   color: #fff;
+}
+
+body {
+  background: #121212;
 }
 
 a {
@@ -24,12 +26,75 @@ a {
   color: #fff;
 }
 
-.wrpa {
+::placeholder {
+  font-weight: bold;
+}
+
+.wrap {
   max-width: 1520px;
+  margin: 0 auto;
 }
 
 .logo {
   font-family: "EF_MACHO";
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.input .inp {
+  background: #121212;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 16px;
+  line-height: 50px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  outline: none;
+  transition: 0.5s;
+  border-radius: 6px;
+}
+
+.input > .inp:focus:not(:disabled),
+.input > .inp:hover:not(:disabled) {
+  border: 1px solid #fff;
+}
+
+.error-msg {
+  margin-top: 8px;
+  color: #0cd95d;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.error-msg .material-symbols-outlined {
+  font-size: 16px;
+  color: #0cd95d;
+  margin-right: 5px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+}
+
+.bt_green {
+  background: #0cd95d;
+  border: 1px solid #0cd95d;
+}
+
+.btn {
+  border-radius: 6px;
+  padding: 20px 40px 20px 40px;
+  text-align: center;
+  transition: 0.3s;
 }
 
 /****** 헤더 *****/
@@ -46,6 +111,7 @@ a {
 }
 
 .header .wrap {
+  max-width: 100%;
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.1);
   display: flex;
@@ -183,6 +249,7 @@ a.login:hover {
 }
 
 .footer .wrap {
+  max-width: 100%;
   display: flex;
   align-items: start;
   justify-content: start;
@@ -192,6 +259,7 @@ a.login:hover {
 
 .footer .logo {
   font-size: 30px;
+  color: white;
 }
 
 .footer .info span {
@@ -206,4 +274,32 @@ a.login:hover {
 .footer .info p {
   margin-top: 30px;
   display: block;
+}
+
+/**로그인**/
+
+.SignIn .wrap {
+  padding: 300px 0;
+  width: 450px;
+}
+
+.login-box .input.pw .inp {
+  margin-top: 15px;
+}
+
+.pw_find {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.login-box .bt_green {
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.login-box .join {
+  margin-top: 10px;
+  border: 1px solid #0cd95d;
+  color: #0cd95d;
+  font-weight: bold;
 }
