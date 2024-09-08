@@ -23,23 +23,25 @@ export default function Header() {
                   {data.title}
                 </span>
 
-                {hoverMenu === data && (
-                  <ul>
-                    {hoverMenu?.child.map((subData, subIndex) => (
-                      <li key={subIndex}>
-                        <Link to={subData?.to}>
-                          <span
-                            onClick={() => {
-                              setHoverMenu(null);
-                            }}
-                          >
-                            {subData.subTitle}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div>
+                  {hoverMenu === data && (
+                    <ul>
+                      {hoverMenu?.child.map((subData, subIndex) => (
+                        <li key={subIndex}>
+                          <Link to={subData?.to}>
+                            <span
+                              onClick={() => {
+                                setHoverMenu(null);
+                              }}
+                            >
+                              {subData.subTitle}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
@@ -51,58 +53,13 @@ export default function Header() {
               }}
             />
           )}
-
-          {/* <ul className="menu">
-            <li>
-              <span>MENU1</span>
-              <ul>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span>MENU2</span>
-              <ul>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span>MENU3</span>
-              <ul>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-                <li>
-                  <span>MENU1</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span>MENU4</span>
-            </li>
-          </ul> */}
           <Link to="/signIn" className="login">
-            <div>로그인</div>
+            <span className="material-symbols-outlined">account_circle</span>
+            <ul>
+              <li>로그인</li>
+              <li>마이페이지</li>
+            </ul>
           </Link>
-          {/* <div className="menu_bg" /> */}
         </div>
       </div>
     </>

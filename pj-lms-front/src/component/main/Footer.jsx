@@ -16,6 +16,10 @@ export default function Footer() {
             </ul>
             <p>© Code Lap. All rights reserved.</p>
           </div>
+
+          <div className="top_btn">
+            <span className="material-symbols-outlined ">north</span>
+          </div>
         </div>
       </div>
     </>
