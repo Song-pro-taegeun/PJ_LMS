@@ -10,11 +10,11 @@
 * {
   padding: 0;
   margin: 0;
-  position: relative;
   list-style-type: none;
   box-sizing: border-box;
   font-family: "SUIT", sans-serif;
   color: #fff;
+  word-break: keep-all;
 }
 
 body {
@@ -37,6 +37,8 @@ a {
 
 .logo {
   font-family: "EF_MACHO";
+  position: relative;
+  z-index: 3;
 }
 
 .title {
@@ -112,6 +114,7 @@ a {
 
 .header .wrap {
   max-width: 100%;
+  width: 100%;
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.1);
   display: flex;
@@ -125,6 +128,7 @@ a {
 .header .logo {
   font-size: 30px;
   animation: logo 5s ease-in-out infinite;
+  z-index: 3;
 }
 
 @keyframes logo {
@@ -157,6 +161,8 @@ a {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 1;
 }
 
 .header .menu > li {
@@ -172,24 +178,27 @@ a {
   color: #0cd95d;
 }
 
-.header .menu ul {
+.header .menu div {
   /* display: none; */
   list-style: none;
   position: absolute;
   top: 113%;
   height: 80px;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
+.header .menu div ul {
   display: flex;
   align-items: center;
-  justify-self: center;
+  justify-content: start;
+  height: 77px;
 }
 
 .header .menu ul li {
   padding: 0 2.5em;
-  display: flex;
-  align-items: center;
   cursor: pointer;
+  position: relative;
 }
 
 .header .menu ul li:hover {
@@ -216,13 +225,46 @@ a {
   display: none;
 }
 
-a.login {
+.login {
   padding-left: 2em;
   transition: 0.5s;
+  position: relative;
+  z-index: 3;
+  padding: 0;
 }
 
-a.login:hover {
-  color: #0cd95d;
+.login:hover ul {
+  display: block;
+}
+
+.login span {
+  font-size: 34px;
+}
+
+.login ul {
+  position: absolute;
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  color: #212121;
+  border-radius: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.login ul li {
+  color: #121212;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.login ul li:last-child {
+  margin-bottom: 0;
+}
+
+.login ul li:hover {
+  text-decoration: underline;
 }
 
 .menu_bg {
@@ -255,11 +297,16 @@ a.login:hover {
   justify-content: start;
   gap: 5em;
   line-height: 2;
+  position: relative;
 }
 
 .footer .logo {
   font-size: 30px;
   color: white;
+}
+
+.footer .info li {
+  color: #999;
 }
 
 .footer .info span {
@@ -274,6 +321,32 @@ a.login:hover {
 .footer .info p {
   margin-top: 30px;
   display: block;
+  color: #999;
+}
+
+.footer .top_btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .top_btn span {
+  font-size: 50px;
+  bottom: 0;
+  position: relative;
+  transition: 0.5s;
+}
+
+.footer .top_btn:hover span {
+  bottom: 10px;
 }
 
 /**로그인**/
