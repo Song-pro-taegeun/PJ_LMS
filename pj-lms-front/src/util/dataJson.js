@@ -84,6 +84,10 @@ export const menuList = [
         subTitle: "1:1 대화",
         to: "/",
       },
+      {
+        subTitle: "취소/환불문의",
+        to: "/",
+      },
     ],
   },
 ];
