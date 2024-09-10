@@ -1,11 +1,14 @@
 import { useState } from "react";
+
 import { signInApi } from "../../service/authService";
 import { validateEmail } from "../../util/commonFunction";
 import { useNavigate } from "react-router-dom";
-
-// 수정된 코드 (올바른 방식)
 import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../store/slice/userSlice";
+
 export default function SignIn() {
+  const dispatch = useDispatch();
   const nav = useNavigate();
   const [formData, setFormData] = useState({
     email: null,
@@ -67,7 +70,7 @@ export default function SignIn() {
       if (response.status === 200) {
         localStorage.setItem("pl_user_info", JSON.stringify(response.data));
         const userInfo = JSON.parse(localStorage.getItem("pl_user_info"));
-        console.log(jwtDecode(userInfo.accessToken));
+        dispatch(setUserInfo(jwtDecode(userInfo.accessToken)));
         nav("/");
       }
     } catch (error) {
