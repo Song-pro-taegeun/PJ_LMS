@@ -1,0 +1,9 @@
+FROM openjdk:17-jdk-alpine
+# RUN mkdir -p /app
+# ADD ./lms-0.0.1-SNAPSHOT.jar /app/
+
+# WORKDIR /app
+# EXPOSE 8080
+
+# ENV SPRING_PROFILES_ACTIVE=prod 
+# CMD ["java", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "-jar", "lms-0.0.1-SNAPSHOT.jar"]
