@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { menuList } from "../../util/dataJson";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../../store/slice/userSlice";
 
 export default function Header() {
+  const dispatch = useDispatch();
   const [hoverMenu, setHoverMenu] = useState();
+  const userInfo = useSelector((state) => state.userSlice);
+
   return (
     <>
       <div className="header">
@@ -53,13 +58,35 @@ export default function Header() {
               }}
             />
           )}
-          <Link to="/signIn" className="login">
+
+          <div className="login">
             <span className="material-symbols-outlined">account_circle</span>
-            <ul>
-              <li>로그인</li>
-              <li>마이페이지</li>
-            </ul>
-          </Link>
+            {!userInfo?.pmUserId && (
+              <ul>
+                <Link to="/signIn">
+                  <li>로그인</li>
+                </Link>
+              </ul>
+            )}
+
+            {userInfo?.pmUserId && (
+              <ul>
+                <li
+                  onClick={() => {
+                    localStorage.removeItem("pl_user_info");
+                    dispatch(setUserInfo(null));
+                    setUserInfo(null);
+                    window.location.href = "/";
+                  }}
+                >
+                  로그아웃
+                </li>
+                <Link to="/signIn">
+                  <li>마이페이지</li>
+                </Link>
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </>
