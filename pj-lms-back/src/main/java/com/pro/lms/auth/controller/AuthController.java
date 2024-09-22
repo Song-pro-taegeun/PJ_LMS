@@ -8,10 +8,13 @@ import com.pro.lms.auth.dto.TokenRequestDto;
 import com.pro.lms.auth.service.AuthService;
 import com.pro.lms.auth.service.MailService;
 import com.pro.lms.entity.LmsUser;
+import com.pro.lms.repository.LmsMemberRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,9 @@ public class AuthController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private LmsMemberRepository lmsMemberRepository;
 
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
@@ -64,5 +70,10 @@ public class AuthController {
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         String sessionId = LmsApplication.makeNextSessionId();
         return ResponseEntity.ok(authService.reissue(tokenRequestDto, sessionId));
+    }
+
+    @GetMapping("/emailCheck/{email}")
+    public String emailCheck(@PathVariable String email) {
+        return mailService.emailCheck(email);
     }
 }
