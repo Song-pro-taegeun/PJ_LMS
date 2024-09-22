@@ -17,3 +17,15 @@ export const passwordResetApi = async (param) => {
   const response = POST(URL, param, null);
   return response;
 };
+
+export const sendEmailApi = async (param) => {
+  const URL = "/api/auth/emailCheck/" + param;
+  const response = GET(URL, null);
+  return response;
+};
+
+export const signUpApi = async (param) => {
+  const URL = "/api/auth/signup";
+  const response = POST(URL, param, null);
+  return response;
+};

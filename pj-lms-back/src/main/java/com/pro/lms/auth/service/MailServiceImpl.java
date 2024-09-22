@@ -1,10 +1,13 @@
 package com.pro.lms.auth.service;
 
 import com.pro.lms.auth.dto.MailDto;
+import com.pro.lms.repository.LmsMemberRepository;
 import com.pro.lms.util.AesCipher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private AesCipher aesCipher;
+
+    @Autowired
+    private LmsMemberRepository lmsMemberRepository;
 
     private static String code;
 
@@ -82,6 +88,18 @@ public class MailServiceImpl implements MailService {
         } catch (NoSuchAlgorithmException e) {
             log.debug("createCode() exception occur", e.getMessage());
             return e.getMessage();
+        }
+    }
+
+    @Override
+    public String emailCheck(String email) {
+        Boolean exists = lmsMemberRepository.existsByPmUserId(email);
+        System.out.println(exists);
+        if(exists) {
+            return "1";
+        }
+        else {
+            return mailSend(email);
         }
     }
 }
