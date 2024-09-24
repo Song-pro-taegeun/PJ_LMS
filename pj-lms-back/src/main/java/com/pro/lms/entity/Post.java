@@ -28,8 +28,8 @@ public class Post {
     // 순환 참조 문제가 발생하여 스택 트레이스가 무한히 반복.
     // JPA 직렬화 문제 발생함(재귀적으로 계속 무는 현상)
     // 해결을 위해 @JsonIgnore 어노테이션 명시
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+//    @JsonIgnore
+//    private User user;
 }
