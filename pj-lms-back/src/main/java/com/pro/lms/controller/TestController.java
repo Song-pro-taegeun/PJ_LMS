@@ -1,9 +1,12 @@
 package com.pro.lms.controller;
 
+import com.pro.lms.dto.BoardMemberDto;
 import com.pro.lms.entity.LmsUser;
 import com.pro.lms.entity.Post;
 import com.pro.lms.entity.User;
 import com.pro.lms.service.TestService;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +40,27 @@ public class TestController {
         return testService.getJoinJpaTest(username);
     }
 
-    @ApiOperation("TEST JPA JOIN Post API")
-    @GetMapping("/testJpaPostJoin/{username}")
-    public List<Post> getJoinJpaTestPost(@PathVariable("username") String username){
-        return testService.getJoinJpaTestPost(username);
-    }
+//    @ApiOperation("TEST JPA JOIN Post API")
+//    @GetMapping("/testJpaPostJoin/{username}")
+//    public List<Post> getJoinJpaTestPost(@PathVariable("username") long username){
+//        return testService.getJoinJpaTestPost(username);
+//    }
 
     @PostMapping("/testInsert")
-    Post insertPost(@RequestBody Post post){
+    public Post insertPost(@RequestBody Post post){
         return testService.insertPost(post);
+    }
+
+    @ApiOperation("TEST queryDslTest")
+    @GetMapping("/queryDslTest/{userId}")
+    public List<Post> queryDslTest(@PathVariable("userId") long userId){
+        return testService.queryDslTest(userId);
+    }
+
+
+    @ApiOperation("TEST queryDslJoinTest")
+    @GetMapping("/queryDslJoinTest/{userId}")
+    public List<BoardMemberDto> queryDslJoinTest(@PathVariable("userId") long userId){
+        return testService.queryDslJoinTest(userId);
     }
 }

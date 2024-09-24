@@ -25,6 +25,6 @@ public class User {
     // user 테이블과 post는 일대다 관계임
     // user id와 종속된 Post 정보를 다 가져온다.
     // mappedBy는 해당 엔티티의 필드명 명시
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Post> posts = new ArrayList<>();
 }
