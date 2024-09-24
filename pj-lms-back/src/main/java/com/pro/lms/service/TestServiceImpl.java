@@ -1,5 +1,6 @@
 package com.pro.lms.service;
 
+import com.pro.lms.dto.BoardMemberDto;
 import com.pro.lms.entity.LmsUser;
 import com.pro.lms.entity.Post;
 import com.pro.lms.entity.User;
@@ -7,8 +8,11 @@ import com.pro.lms.repository.LmsMemberRepository;
 import com.pro.lms.repository.PostRepository;
 import com.pro.lms.repository.UserRepository;
 import com.pro.lms.util.AesCipher;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -49,11 +53,20 @@ public class TestServiceImpl implements TestService{
         return userRepository.findByUsername(username);
     }
 
-    public List<Post> getJoinJpaTestPost(String username){
-        return postRepository.findByUserUsername(username);
-    }
+//    public List<Post> getJoinJpaTestPost(long username){
+//        return postRepository.findByUserUsername(username);
+//    }
 
     public Post insertPost(Post post){
         return postRepository.save(post);
     }
+
+    public List<Post> queryDslTest(long userId){
+        return postRepository.queryDslTest(userId);
+    };
+
+    public List<BoardMemberDto> queryDslJoinTest(long userId){
+        return postRepository.queryDslJoinTest(userId);
+    };
+
 }
