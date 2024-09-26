@@ -20,6 +20,9 @@ export default function PwdReset() {
     passwordConfirm: null,
   });
 
+  // 인증 확인 데이터
+  const [message, setMessage] = useState();
+
   // 비밀번호 Error useState 설정
   const [formError, setFormError] = useState({
     passwordError: null,
@@ -35,8 +38,14 @@ export default function PwdReset() {
     step,
     setStep,
     decryptValue,
+    message,
+    setMessage,
   };
 
+  // 이메일 인증 확인 => 다음 버튼 활성화
+  const handleNextStep = () => {
+    setStep({ level1: false, level2: false, level3: true });
+  };
   const handleSendClick = () => {
     callSendCode();
   };
@@ -45,7 +54,7 @@ export default function PwdReset() {
     const response = await sendCodeApi(formData.email);
     if (response.status === 200) {
       setDecryptValue(aesDecrypt(response.data));
-      setStep({ ...step, level1: false, level2: true });
+      setStep({ ...step, level2: true });
     }
   };
 
@@ -118,6 +127,12 @@ export default function PwdReset() {
 
   return (
     <>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <h2>PWD RESET</h2>
       {step.level1 && (
         <>
@@ -129,10 +144,18 @@ export default function PwdReset() {
             }}
           />
           <button onClick={handleSendClick}>발송</button>
+          <br></br>
+          <br></br>
+          {step.level2 && (
+            <>
+              <Verification prop={prop} />
+              <button onClick={handleNextStep} disabled={!message}>
+                다음
+              </button>
+            </>
+          )}
         </>
       )}
-
-      {step.level2 && <Verification prop={prop} />}
       {step.level3 && (
         <>
           <span>새 비밀번호 입력</span>
