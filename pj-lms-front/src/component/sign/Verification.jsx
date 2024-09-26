@@ -43,7 +43,7 @@ export default function Verification({ prop }) {
       setMessage("인증 확인");
       setTime(9999999);
       setVerifiStatus("complate");
-      setStep({ ...step, level2: false, level3: true });
+      // setStep({ ...step, level2: false, level3: true });
     } else {
       setVerifiStatus("error");
       setMessage();
