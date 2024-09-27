@@ -1,9 +1,8 @@
 package com.pro.lms.repository;
 
 import com.pro.lms.dto.BoardMemberDto;
+import com.pro.lms.dto.QBoardMemberDto;
 import com.pro.lms.entity.Post;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -11,11 +10,10 @@ import static com.pro.lms.entity.QPost.post;
 import static com.pro.lms.entity.QUser.user;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom {
+public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     private  final JPAQueryFactory jpaQueryFactory;
 
     // queryDsl TEST
@@ -32,30 +30,30 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
 
+    // dto에서 @QueryProjection를 작성하여 생성자를 만들어줄 경우 셀렉트 시 바로 DTO에 매핑이 가능하다.
     @Override
     public List<BoardMemberDto> queryDslJoinTest(long userId) {
-        List<Tuple> tuples =
-                jpaQueryFactory
-                .select(
-                    post.id, post.userId, post.title, post.content
-                    , user.email, user.username
-                )
+        return jpaQueryFactory
+                .select(new QBoardMemberDto
+                        (
+                            post.id, post.title, post.content,  post.userId,
+                            user.username, user.email
+                        )
+                    )
                 .from(post)
                 .leftJoin(user).on(post.userId.eq(user.id))
                 .where(post.userId.eq(userId))
                 .fetch();
 
-        return tuples.stream()
-                .map(tuple -> {
-                    BoardMemberDto dto = new BoardMemberDto();
-                    dto.setId(tuple.get(post.id));
-                    dto.setUserid(tuple.get(post.userId));
-                    dto.setTitle(tuple.get(post.title));
-                    dto.setContents(tuple.get(post.content));
-                    dto.setEmail(tuple.get(user.email));
-                    dto.setUsername(tuple.get(user.username));
-                    return dto;
-                })
-                .collect(Collectors.toList());
+//        return
+//        jpaQueryFactory
+//        .select(
+//            post.id, post.userId, post.title, post.content
+//            , user.email, user.username
+//        )
+//        .from(post)
+//        .leftJoin(user).on(post.userId.eq(user.id))
+//        .where(post.userId.eq(userId))
+//        .fetch();
     }
 }
