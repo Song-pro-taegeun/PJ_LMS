@@ -10,6 +10,7 @@ import com.pro.lms.repository.UserRepository;
 import com.pro.lms.util.AesCipher;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.pro.lms.entity.QPost.post;
+import static com.pro.lms.entity.QUser.user;
 
 @Service
 public class TestServiceImpl implements TestService{
@@ -67,6 +72,21 @@ public class TestServiceImpl implements TestService{
 
     public List<BoardMemberDto> queryDslJoinTest(long userId){
         return postRepository.queryDslJoinTest(userId);
-    };
 
+        // dto에서 @QueryProjection를 작성하지 않았을 때 -> custom Repository 에서 DTO 매핑이되지 않아 튜플로 리턴값을 받은 후 직접 매핑해줘야한다.
+        // 너무 귄찮으니 @QueryProjection를 작성을 권장
+//        List<Tuple> tuples = postRepository.queryDslJoinTest(userId);
+//        return tuples.stream()
+//                .map(tuple -> {
+//                    BoardMemberDto dto = new BoardMemberDto();
+//                    dto.setId(tuple.get(post.id));
+//                    dto.setUserid(tuple.get(post.userId));
+//                    dto.setTitle(tuple.get(post.title));
+//                    dto.setContents(tuple.get(post.content));
+//                    dto.setEmail(tuple.get(user.email));
+//                    dto.setUsername(tuple.get(user.username));
+//                    return dto;
+//                })
+//                .collect(Collectors.toList());
+    };
 }
